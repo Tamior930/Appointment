@@ -1,13 +1,15 @@
 <?php
-$servername = "localhost";
-$username = "bif2webscriptinguser";
-$password = "bif2021";
+function getDbConnection() {
+    $host = 'localhost';
+    $user = 'bif2webscriptinguser';
+    $pass = 'bif2021';
+    $db = 'appointment_finder';
 
-// Create connection
-$conn = new mysqli($servername, $username, $password);
+    $conn = new mysqli($host, $user, $pass, $db);
 
-// Check connection
-if ($conn->connect_error) {
-    die ("Connection failed: " . $conn->connect_error);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    return $conn;
 }
-echo "Connected successfully";
