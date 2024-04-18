@@ -1,5 +1,6 @@
 <?php
-function getDbConnection() {
+function getDbConnection()
+{
     $host = 'localhost';
     $user = 'bif2webscriptinguser';
     $pass = 'bif2021';
