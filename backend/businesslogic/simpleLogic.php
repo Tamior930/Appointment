@@ -15,11 +15,17 @@ class SimpleLogic
             case "queryAppointment":
                 $res = $this->dh->queryAppointment();
                 break;
+            case "queryAppointments":
+                $res = $this->dh->queryAppointments();
+                break;        
             case "queryPersonById":
                 $res = $this->dh->queryPersonById($param);
                 break;
             case "queryPersonByName":
                 $res = $this->dh->queryPersonByName($param);
+                break;
+            case "getDemoData":
+                $res = $this->dh->loadDemoData();
                 break;
             default:
                 $res = null;

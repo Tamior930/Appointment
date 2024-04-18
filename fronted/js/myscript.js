@@ -15,7 +15,7 @@ function loaddata(searchterm) {
         type: "GET",
         url: "../backend/serviceHandler.php",
         cache: false,
-        data: {method: "queryAppointment", param: searchterm},
+        data: {method: "queryAppointments", param: searchterm},
         dataType: "json",
         success: function (response) {
             console.log(response);
@@ -26,4 +26,19 @@ function loaddata(searchterm) {
         }
         
     });
+}
+
+function validateForm() {
+    return checkChoices();
+}
+
+function checkChoices() {
+    var choice0 = document.getElementById("choice0").value;
+    var choice1 = document.getElementById("choice1").value;
+    
+    if (choice0 == "" || choice1 == "") {
+        alert("Choice 0 and Choice 1 must not be empty");
+        return false;
+    }
+    return true;
 }
