@@ -41,26 +41,10 @@ class Appointment {
         
     }
 
-
-    function get_appointments2()
-    {
-        //mysqli_report (MYSQLI_REPORT_OFF);
-        $this->db-> driver -> report_mode = MYSQLI_REPORT_ERROR;
-        //$query = "SELECT * FROM appointments FORCE INDEX (PRIMARY) ORDER BY ID";
-        $query =  "SELECT appointment_id, title, location, date, voting_deadline FROM appointments WHERE 1 FORCE INDEX (PRIMARY) ORDER BY ID";
-
-        $r = $this->db->getObjectArray($query);
-        //$r = "";
-        //$r->bind_result($uid, $uname, $upass, $umail);
-        $this->db-> driver -> report_mode = MYSQLI_REPORT_ALL;
-        $this->db->closedb();
-    }
-
     function toString() {
         return "Appointment ID: " + $this->appointment_id + "\nTitle: " + $this->title + "\nLocation: " + $this-> location + "\nDate: " + $this-> date + "\nVoting Deadline: " + $this->voting_deadline; 
     }
 }
-
 
 function get_appointments()
 {

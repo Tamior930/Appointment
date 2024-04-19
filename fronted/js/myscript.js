@@ -7,6 +7,37 @@ $(document).ready(function () {
     });
     */
    loaddata('');
+   //$('.active a').tab('show');
+
+   $('#navTabs a').click(function (e) {
+        e.preventDefault();
+        
+        var href = this.hash;
+        $('.active').removeClass('active');
+        $(href).addClass('active');
+        $(this).addClass('active');
+    });
+
+    //Get form element
+    var form=document.getElementById("form_poll_1");
+    function submitForm(event){
+
+    //Preventing page refresh
+    event.preventDefault();
+    
+    $.ajax({
+        type: "GET",
+        url: "addAppointment2.html",
+        data: { },
+        success: function(data){
+            $('#tab_add').html(data);
+        }
+    });
+
+    }
+
+    //Calling a function during form submission.
+    form.addEventListener('submit', submitForm);
 });
 
 function loaddata(searchterm) {
@@ -42,3 +73,5 @@ function checkChoices() {
     }
     return true;
 }
+
+

@@ -27,6 +27,9 @@ class SimpleLogic
             case "getDemoData":
                 $res = $this->dh->loadDemoData();
                 break;
+            case "saveDemoDataToDB":
+                $res = $this->dh->saveDemoDataToDB();
+                break;  
             default:
                 $res = null;
                 break;
