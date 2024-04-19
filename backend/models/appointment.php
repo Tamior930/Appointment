@@ -44,6 +44,28 @@ class Appointment {
     function toString() {
         return "Appointment ID: " + $this->appointment_id + "\nTitle: " + $this->title + "\nLocation: " + $this-> location + "\nDate: " + $this-> date + "\nVoting Deadline: " + $this->voting_deadline; 
     }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    // Getter for title
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    // Setter for title
+    public function getVoting()
+    {
+        return $this->voting_deadline;
+    }
 }
 
 function get_appointmentByID($id)
@@ -82,27 +104,5 @@ function get_appointments()
         $db-> driver -> report_mode = MYSQLI_REPORT_ALL;
         $db->closedb();
         return $r;
-    }
-
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    public function getLocation()
-    {
-        return $this->location;
-    }
-
-    // Getter for title
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    // Setter for title
-    public function getVoting()
-    {
-        return $this->voting_deadline;
     }
 }

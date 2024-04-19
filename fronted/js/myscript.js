@@ -19,26 +19,26 @@ $(document).ready(function () {
         $(this).addClass('active');
     });
 
+    
     //Get form element
     var form=document.getElementById("form_poll_1");
     function submitForm(event){
 
-    //Preventing page refresh
-    event.preventDefault();
-    
-    $.ajax({
-        type: "GET",
-        url: "addAppointment2.html",
-        data: { },
-        success: function(data){
-            $('#tab_add').html(data);
-        }
-    });
-
+        //Preventing page refresh
+        event.preventDefault();
+        
+        $.ajax({
+            type: "GET",
+            url: "addAppointment2.html",
+            data: { },
+            success: function(data){
+                $('#tab_add').html(data);
+            }
+        });
     }
-
     //Calling a function during form submission.
     form.addEventListener('submit', submitForm);
+
 });
 
 function loaddata(searchterm) {
@@ -98,14 +98,24 @@ function displayAppointments(appointments) {
     const container = $("#appointmentsList");
     container.empty();
 
+    /*
+    {
+    "appointment_id": "90",
+    "title": "Team Meeting",
+    "location": "Office Conference Room",
+    "date": "2022-11-15",
+    "voting_deadline": "2022-11-10 12:00:00"
+    }
+    */
+
     appointments.forEach(appointment => {
         const Card = `
             <div class="card mb-3">
-                <div class="card-header">${appointment[0].getTitle()}</div>
+                <div class="card-header">${appointment.appointment_id}</div>
                 <div class="card-body">
-                    <h5 class="card-title">${appointment[0].location}</h5>
-                    <p class="card-text">Start: ${appointment[0].date}</p>
-                    <p class="card-text">End: ${appointment[0].voting_deadline}</p>
+                    <h5 class="card-title">${appointment.location}</h5>
+                    <p class="card-text">Start: ${appointment.date}</p>
+                    <p class="card-text">End: ${appointment.voting_deadline}</p>
                 </div>
             </div>
         `;
