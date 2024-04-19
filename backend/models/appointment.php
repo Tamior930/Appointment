@@ -46,23 +46,41 @@ class Appointment {
     }
 }
 
+function get_appointmentByID($id)
+{
+    $db = new DB();
+    $db -> getDbConnection();
+
+    $query = "SELECT * FROM appointments WHERE appointment_id = ?";
+
+    $stmt = $db->prepare($query);
+    $stmt->bind_param("s", $id);
+
+    $r = $db->getSingleRecord($stmt);
+
+    $db->closedb();
+    if ($r)
+        return $r;
+    else
+        return false;
+}
+
 function get_appointments()
 {
     $db = new DB();
     $db -> getDbConnection();
 
     if ($db != null) {
-    
-    //mysqli_report (MYSQLI_REPORT_OFF);
-    $db-> driver -> report_mode = MYSQLI_REPORT_ERROR;
-    //$query = "SELECT * FROM appointments FORCE INDEX (PRIMARY) ORDER BY ID";
-    $query =  "SELECT appointment_id, title, location, date, voting_deadline FROM appointments WHERE 1";
+        //mysqli_report (MYSQLI_REPORT_OFF);
+        $db-> driver -> report_mode = MYSQLI_REPORT_ERROR;
+        //$query = "SELECT * FROM appointments FORCE INDEX (PRIMARY) ORDER BY ID";
+        $query =  "SELECT appointment_id, title, location, date, voting_deadline FROM appointments WHERE 1";
 
-    $r = $db->getObjectArray($query);
-    //$r = "";
-    //$r->bind_result($uid, $uname, $upass, $umail);
-    $db-> driver -> report_mode = MYSQLI_REPORT_ALL;
-    $db->closedb();
-    return $r;
-}
+        $r = $db->getObjectArray($query);
+        //$r = "";
+        //$r->bind_result($uid, $uname, $upass, $umail);
+        $db-> driver -> report_mode = MYSQLI_REPORT_ALL;
+        $db->closedb();
+        return $r;
+    }
 }

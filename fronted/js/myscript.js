@@ -6,8 +6,9 @@ $(document).ready(function () {
        loaddata($("#seachfield").val());
     });
     */
-   loaddata('');
+   //loaddata('');
    //$('.active a').tab('show');
+   loadAppointments()
 
    $('#navTabs a').click(function (e) {
         e.preventDefault();
@@ -42,6 +43,26 @@ $(document).ready(function () {
 
 function loaddata(searchterm) {
 
+    $.ajax({
+        type: "GET",
+        url: "../backend/serviceHandler.php",
+        cache: false,
+        data: {method: "queryAppointments", param: searchterm},
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+
+        },
+        error: function (response) {
+            console.log(response);
+        }
+        
+    });
+}
+
+function loadAppointments() {
+    let searchterm = '';
+    
     $.ajax({
         type: "GET",
         url: "../backend/serviceHandler.php",

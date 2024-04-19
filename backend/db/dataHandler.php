@@ -4,13 +4,9 @@ include("models/appointment.php");
 
 class DataHandler
 {
-    public function queryAppointment()
+    public function infoAppointment($id)
     {
-        $res =  $this->getDemoData();
-        
-        $a = new Appointment("title", "location", "1000-01-01", "2020-01-01 00:00:00");
-        $a->save_appointment_to_db();
-        return $res;
+        return get_appointmentByID($id);
     }
 
     public function queryAppointments()
