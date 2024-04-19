@@ -1,0 +1,95 @@
+<div class="container ombre">
+
+    <header class="clearfix">
+        <h1 class="row col-xs-12 col-sm-10">
+            <a href="" title="Home - Appointment">
+                <img src="" alt="Poll_2"
+                    class="img-responsive">
+            </a>
+        </h1>
+        <h2 class="lead col-xs-12"><i>Poll creation (2 of 3)</i></h2>
+        <div class="trait col-xs-12" role="presentation"></div>
+    </header>
+    <main>
+        <form name="form_poll_2" id="form_poll_2" class="" onsubmit="return validateForm()" action="">
+            <div class="alert alert-info">
+
+                <p>To create a poll you should provide at least two different choices.</p>
+                <p>You can add or remove choices with the buttons
+                    <span class="glyphicon glyphicon-minus text-info">
+                    </span><span class="sr-only">Remove</span>
+                    <span class="glyphicon glyphicon-plus text-success"></span>
+                    <span class="sr-only">Add</span>
+                </p>
+            </div>
+
+            <div class="form-group row mb-3 justify-content-center">
+                <label for="choice0" class="col-sm-2 control-label">Choice 1</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="choices[]" size="40" value="" id="choice0">
+                </div>
+            </div>
+
+            <div class="form-group row mb-3 justify-content-center">
+                <label for="choice1" class="col-sm-2 control-label">Choice 2</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="choices[]" size="40" value="" id="choice1">
+                </div>
+            </div>
+
+            <div class="form-group row mb-3 justify-content-center">
+                <label for="choice2" class="col-sm-2 control-label">Choice 3</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="choices[]" size="40" value="" id="choice2">
+                </div>
+            </div>
+
+            <div class="form-group row mb-3 justify-content-center">
+                <label for="choice3" class="col-sm-2 control-label">Choice 4</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="choices[]" size="40" value="" id="choice3">
+                </div>
+            </div>
+
+            <div class="form-group row mb-3 justify-content-center">
+                <label for="choice4" class="col-sm-2 control-label">Choice 5</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="choices[]" size="40" value="" id="choice4">
+                </div>
+            </div>
+
+            <div class="form-group row mb-3 justify-content-center">
+                <div class="col-md-2">
+                    <div class="btn-group btn-group">
+                        <button type="button" id="remove-a-choice" class="btn btn-default" title="Remove a choice"><span
+                                class="glyphicon glyphicon-minus text-info"></span><span
+                                class="sr-only">Remove</span></button>
+                        <button type="button" id="add-a-choice" class="btn btn-default" title="Add a choice"><span
+                                class="glyphicon glyphicon-plus text-success"></span><span
+                                class="sr-only">Add</span></button>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <button name="fin_sondage_autre" value="Next" type="submit" class="btn btn-success float-end"
+                        title="Go to step 3">Next</button>
+                    <a class="btn btn-default float-end" href="./addAppointment.html" title="Return to step 1">Back</a>
+                </div>
+            </div>
+
+        </form>
+
+        <noscript>
+            <div class="alert alert-danger">
+                [missing key: Step 1.Javascript is disabled on your browser. Its activation is required to create a
+                poll.]
+            </div>
+        </noscript>
+        <div id="cookie-warning" class="alert alert-danger" style="display:none">
+            [missing key: Step 1.Cookies are disabled on your browser. Theirs activation is required to create a
+            poll.]
+        </div>
+
+
+    </main>
+</div> <!-- .container -->
