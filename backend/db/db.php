@@ -14,7 +14,7 @@ class DB {
 		$host = 'localhost';
         $user = 'bif2webscriptinguser';
         $pass = 'bif2021';
-        $db = 'appointment_finder';
+        $db = 'appointmentsfinder';
 
         /* Fehlermeldungen aktivieren */
 		$this->driver = new mysqli_driver();
@@ -30,54 +30,32 @@ class DB {
         return $this -> conn;
     }
 
-	// Singleton-Zugriffsmethode
-    public static function getInstance() {
-        if (self::$instance === null) {
-            self::$instance = new DB();
-        }
-        return self::$instance;
-    }
+    // function prepare($query)
+	// {
+	// 	return $this->conn->prepare($query);
+	// }
 
-    // Methode zur Rückgabe der Verbindung
-    public function getConnection() {
-        return $this->conn;
-    }
+    // function insertRecord($stmt): bool
+	// {
+	// 	try {
+	// 		$this->result = $stmt->execute();
+	// 	} catch (mysqli_sql_exception $e) {
+	// 		echo "catch: " . $e->__toString();
+	// 		echo "code: " . $e->getCode();
+	// 		echo "msg: " . $e->getMessage();
 
-    // Verhindert das Klonen der Instanz
-    private function __clone() {
-    }
+	// 		$this->error = $e->getMessage();
+	// 		$this->error_code = $e->getCode();
 
-    // Verhindert das Deserialisieren der Instanz
-    public function __wakeup() {
-        throw new Exception("Cannot unserialize singleton");
-    }
+	// 		return false;
 
-    function prepare($query)
-	{
-		return $this->conn->prepare($query);
-	}
-
-    function insertRecord($stmt): bool
-	{
-		try {
-			$this->result = $stmt->execute();
-		} catch (mysqli_sql_exception $e) {
-			echo "catch: " . $e->__toString();
-			echo "code: " . $e->getCode();
-			echo "msg: " . $e->getMessage();
-
-			$this->error = $e->getMessage();
-			$this->error_code = $e->getCode();
-
-			return false;
-
-		}
-		//$this->result = $stmt->get_result();
-		$this->inserted_id = $stmt->insert_id;
+	// 	}
+	// 	//$this->result = $stmt->get_result();
+	// 	$this->inserted_id = $stmt->insert_id;
         
-        $this-> closedb();
-		return $this->result;
-	}
+    //     $this-> closedb();
+	// 	return $this->result;
+	// }
 
 
 	function getObjectArray($query): array
@@ -101,18 +79,18 @@ class DB {
 		$this->conn->close();
 	}
 
-    function getSingleRecord($stmt)
-	{
-		$stmt->execute();
-		$result = $stmt->get_result();
+    // function getSingleRecord($stmt)
+	// {
+	// 	$stmt->execute();
+	// 	$result = $stmt->get_result();
 
-		$stmt->close();
+    //     $this-> closedb();
 
-		if ($result->num_rows) {
-			return $result->fetch_object();
-		} else {
-			return false;
-		}
-	}
+	// 	if ($result->num_rows) {
+	// 		return $result->fetch_object();
+	// 	} else {
+	// 		return false;
+	// 	}
+	// }
 }
 

@@ -4,18 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/style.css" />
-    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.7.1.js"></script>
-    <script src="./js/myscript.js" defer></script>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
     />
+    <script
+      type="text/javascript"
+      src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.7.1.js"
+      defer
+    ></script>
+    <script src="./js/myscript.js" defer></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      defer
+    ></script>
     <title>Appointment Finder</title>
   </head>
 
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Tenth navbar example">
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-dark"
+      aria-label="Tenth navbar example"
+    >
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Appointment Finder</a>
         <button
@@ -29,21 +40,25 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-md-center" id="navbarNav">
+        <div
+          class="collapse navbar-collapse justify-content-md-center"
+          id="navbarNav"
+        >
           <ul class="navbar-nav" id="navTabs">
             <li class="nav-item">
-              <a class="nav-link" aria-current="page active" href="#tab_main" >Home</a>
+              <a class="nav-link" aria-current="page active" href="#tab_main"
+                >Home</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#tab_add" >Add Appointment</a>
+              <a class="nav-link" aria-current="page" href="#tab_add"
+                >Add Appointment</a
+              >
             </li>
           </ul>
         </div>
       </div>
     </nav>
-    
-
-
 
     <!--content tabs-->
     <div class="tab-content">
@@ -56,87 +71,163 @@
             <!-- Appointments dynamisch hinzufügen!! -->
           </div>
         </div>
-      
       </div>
+
+      <div
+        class="modal fade"
+        id="appointmentModal"
+        tabindex="-1"
+        aria-labelledby="modalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel">Appointment Details</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <!-- Modal dynamisch wird hinzufügt!! -->
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div id="tab_show" class="tab-pane"></div>
       <div id="tab_add" class="tab-pane">
         <div class="container ombre">
-
           <header class="clearfix">
-              <h1 class="row col-xs-12 col-sm-10">
-                  <a href="" title="Home - Appointment">
-                      <img src="" alt="Appointments"
-                          class="img-responsive">
-                  </a>
-              </h1>
-              <h2 class="lead col-xs-12"><i>Poll creation (1 of 3)</i></h2>
-              <div class="trait col-xs-12" role="presentation"></div>
+            <h1 class="row col-xs-12 col-sm-10">
+              <a href="" title="Home - Appointment">
+                <img src="" alt="Appointments" class="img-responsive" />
+              </a>
+            </h1>
+            <h2 class="lead col-xs-12"><i>Poll creation (1 of 3)</i></h2>
+            <div class="trait col-xs-12" role="presentation"></div>
           </header>
           <main>
-              <form name="form_poll_1" id="form_poll_1" onsubmit="return validateForm()">
-                  <div class="alert alert-info">
-                      <p>
-                          You are in the poll creation section.<br>
-                          Required fields cannot be left blank.
-                      </p>
-                  </div>
-  
-                  <div class="form-group row mb-3 justify-content-center">
-                      <label for="yourname" class="col-sm-3 control-label">Your name *</label>
-                      <div class="col-sm-8">
-                          <input id="yourname" type="text" maxlength="32" name="name" required="" class="form-control" value="">
-                      </div>
-                  </div>
-  
-                  <div class="form-group row mb-3 justify-content-center">
-                      <label for="email" class="col-sm-3 control-label ">
-                          Your email address *<br>
-                          <span class="small">(or ANYTHING@invalid)</span>
-                      </label>
-                      <div class="col-sm-8">
-                          <input id="email" type="email" name="mail" class="form-control" value="">
-                      </div>
-                  </div>
-                  
-                  <div class="form-group row mb-3 justify-content-center">
-                      <label for="poll_title" class="col-sm-3 control-label col-auto">Poll title *</label>
-                      <div class="col-sm-8">
-                          <input id="poll_title" type="text" name="title" class="form-control" required="" value="">
-                      </div>
-                  </div>
-  
-                  <div class="form-group row mb-3 justify-content-center">
-                      <label for="poll_comments" class="col-sm-3 control-label">Location</label>
-                      <div class="col-sm-8">
-                          <input id="location" type="text" name="location" class="form-control" value="">
-                      </div>
-                  </div>     
-  
-                  <div class="form-group row mb-3 justify-content-center">
-                      <label for="poll_comments" class="col-sm-3 control-label">Description</label>
-                      <div class="col-sm-8">
-                          <textarea id="poll_comments" name="description" class="form-control" rows="4" style=""></textarea>
-                      </div>
-                  </div>
-                       
-                  <div class="form-group row mb-3">
-                      <div class="col-sm text-center">
-                          <input type="hidden" name="type" value="$poll_type">
-                          <button name="gotostep2" value="classic" type="submit" class="btn btn-success">
-                              Go to step 2</button>
-                      </div>
-                  </div>
-          
-              </form>        
-          </main>
-        </div> <!-- .container -->
+            <form
+              name="form_poll_1"
+              id="form_poll_1"
+              onsubmit="return validateForm()"
+            >
+              <div class="alert alert-info">
+                <p>
+                  You are in the poll creation section.<br />
+                  Required fields cannot be left blank.
+                </p>
+              </div>
 
+              <div class="form-group row mb-3 justify-content-center">
+                <label for="yourname" class="col-sm-3 control-label"
+                  >Your name *</label
+                >
+                <div class="col-sm-8">
+                  <input
+                    id="yourname"
+                    type="text"
+                    maxlength="32"
+                    name="name"
+                    required=""
+                    class="form-control"
+                    value=""
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row mb-3 justify-content-center">
+                <label for="email" class="col-sm-3 control-label">
+                  Your email address *<br />
+                  <span class="small">(or ANYTHING@invalid)</span>
+                </label>
+                <div class="col-sm-8">
+                  <input
+                    id="email"
+                    type="email"
+                    name="mail"
+                    class="form-control"
+                    value=""
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row mb-3 justify-content-center">
+                <label for="poll_title" class="col-sm-3 control-label col-auto"
+                  >Poll title *</label
+                >
+                <div class="col-sm-8">
+                  <input
+                    id="poll_title"
+                    type="text"
+                    name="title"
+                    class="form-control"
+                    required=""
+                    value=""
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row mb-3 justify-content-center">
+                <label for="poll_comments" class="col-sm-3 control-label"
+                  >Location</label
+                >
+                <div class="col-sm-8">
+                  <input
+                    id="location"
+                    type="text"
+                    name="location"
+                    class="form-control"
+                    value=""
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row mb-3 justify-content-center">
+                <label for="poll_comments" class="col-sm-3 control-label"
+                  >Description</label
+                >
+                <div class="col-sm-8">
+                  <textarea
+                    id="poll_comments"
+                    name="description"
+                    class="form-control"
+                    rows="4"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="form-group row mb-3">
+                <div class="col-sm text-center">
+                  <input type="hidden" name="type" value="$poll_type" />
+                  <button
+                    name="gotostep2"
+                    value="classic"
+                    type="submit"
+                    class="btn btn-success"
+                  >
+                    Go to step 2
+                  </button>
+                </div>
+              </div>
+            </form>
+          </main>
+        </div>
+        <!-- .container -->
       </div>
     </div>
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
