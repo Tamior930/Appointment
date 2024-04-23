@@ -32,32 +32,32 @@ class DB {
         $this->conn->set_charset("utf8mb4");
     }
 
-    // function prepare($query)
-	// {
-	// 	return $this->conn->prepare($query);
-	// }
+    function prepare($query)
+	{
+		return $this->conn->prepare($query);
+	}
 
-    // function insertRecord($stmt): bool
-	// {
-	// 	try {
-	// 		$this->result = $stmt->execute();
-	// 	} catch (mysqli_sql_exception $e) {
-	// 		echo "catch: " . $e->__toString();
-	// 		echo "code: " . $e->getCode();
-	// 		echo "msg: " . $e->getMessage();
+    function insertRecord($stmt): bool
+	{
+		try {
+			$this->result = $stmt->execute();
+		} catch (mysqli_sql_exception $e) {
+			echo "catch: " . $e->__toString();
+			echo "code: " . $e->getCode();
+			echo "msg: " . $e->getMessage();
 
-	// 		$this->error = $e->getMessage();
-	// 		$this->error_code = $e->getCode();
+			$this->error = $e->getMessage();
+			$this->error_code = $e->getCode();
 
-	// 		return false;
+			return false;
 
-	// 	}
-	// 	//$this->result = $stmt->get_result();
-	// 	$this->inserted_id = $stmt->insert_id;
+		}
+		//$this->result = $stmt->get_result();
+		$this->inserted_id = $stmt->insert_id;
         
-    //     $this-> closedb();
-	// 	return $this->result;
-	// }
+        $this-> closedb();
+		return $this->result;
+	}
 
 
 	function getObjectArray($query): array
@@ -81,18 +81,18 @@ class DB {
 		$this->conn->close();
 	}
 
-    // function getSingleRecord($stmt)
-	// {
-	// 	$stmt->execute();
-	// 	$result = $stmt->get_result();
+    function getSingleRecord($stmt)
+	{
+		$stmt->execute();
+		$result = $stmt->get_result();
 
-    //     $this-> closedb();
+        $this-> closedb();
 
-	// 	if ($result->num_rows) {
-	// 		return $result->fetch_object();
-	// 	} else {
-	// 		return false;
-	// 	}
-	// }
+		if ($result->num_rows) {
+			return $result->fetch_object();
+		} else {
+			return false;
+		}
+	}
 }
 

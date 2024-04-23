@@ -1,6 +1,7 @@
 <?php
 require_once("models/appointment.php");
 require_once("models/date_options.php");
+require_once("models/votes.php");
 
 
 class DataHandler
