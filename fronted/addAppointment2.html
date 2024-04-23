@@ -1,17 +1,34 @@
 <div class="container ombre">
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="bi_bi-plus-lg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+        </symbol>    
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </symbol>
+        <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+        </symbol>
+        <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+        </symbol>
+        <symbol id="bi_bi-dash-lg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
+        </symbol>
+    </svg>
 
     <header class="clearfix">
         <h1 class="row col-xs-12 col-sm-10">
             <a href="" title="Home - Appointment">
-                <img src="" alt="Poll_2"
-                    class="img-responsive">
+                <img src="https://s19536.pcdn.co/wp-content/uploads/2022/06/setting-an-appointment-1024x512.jpg" alt="Poll_2"
+                class="img-responsive w-25">
             </a>
         </h1>
         <h2 class="lead col-xs-12"><i>Poll creation (2 of 3)</i></h2>
         <div class="trait col-xs-12" role="presentation"></div>
     </header>
     <main>
-        <form name="form_poll_2" id="form_poll_2" class="" onsubmit="return validateForm()" action="">
+        <form name="form_poll_2" id="form_poll_2" onsubmit="return validateForm()">
             <div class="alert alert-info">
 
                 <p>To create a poll you should provide at least two different choices.</p>
@@ -23,73 +40,67 @@
                 </p>
             </div>
 
-            <div class="form-group row mb-3 justify-content-center">
-                <label for="choice0" class="col-sm-2 control-label">Choice 1</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" name="choices[]" size="40" value="" id="choice0">
+            
+            <div class="choice_divs">
+                <div class="form-group choice-field row mb-3 justify-content-center choice0_div">
+                    <label for="choice0" class="col-sm-2 control-label">Choice 1</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" placeholder="To Date & Time" id="choice0" type="text" value=""/>
+                    </div>
                 </div>
+
+                <!--<div class="form-group choice-field row mb-3 justify-content-center choice1_div">
+                    <label for="choice1" class="col-sm-2 control-label">Choice 2</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" placeholder="To Date & Time" id="choice1" type="text"/>
+                    </div>
+                </div>
+
+                <div class="form-group choice-field row mb-3 justify-content-center choice2_div">
+                    <label for="choice2" class="col-sm-2 control-label">Choice 3</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" placeholder="To Date & Time" id="choice2" type="text"/>
+                    </div>
+                </div>
+
+                <div class="form-group choice-field row mb-3 justify-content-center choice3_div">
+                    <label for="choice3" class="col-sm-2 control-label">Choice 4</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" placeholder="To Date & Time" id="choice3" type="text"/>
+                    </div>
+                </div>
+
+                <div class="form-group choice-field row mb-3 justify-content-center choice4_div">
+                    <label for="choice4" class="col-sm-2 control-label">Choice 5</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" placeholder="To Date & Time" id="choice4" type="text"/>
+                    </div>
+                </div>-->
             </div>
 
             <div class="form-group row mb-3 justify-content-center">
-                <label for="choice1" class="col-sm-2 control-label">Choice 2</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" name="choices[]" size="40" value="" id="choice1">
-                </div>
-            </div>
-
-            <div class="form-group row mb-3 justify-content-center">
-                <label for="choice2" class="col-sm-2 control-label">Choice 3</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" name="choices[]" size="40" value="" id="choice2">
-                </div>
-            </div>
-
-            <div class="form-group row mb-3 justify-content-center">
-                <label for="choice3" class="col-sm-2 control-label">Choice 4</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" name="choices[]" size="40" value="" id="choice3">
-                </div>
-            </div>
-
-            <div class="form-group row mb-3 justify-content-center">
-                <label for="choice4" class="col-sm-2 control-label">Choice 5</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" name="choices[]" size="40" value="" id="choice4">
-                </div>
-            </div>
-
-            <div class="form-group row mb-3 justify-content-center">
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <div class="btn-group btn-group">
-                        <button type="button" id="remove-a-choice" class="btn btn-default" title="Remove a choice"><span
-                                class="glyphicon glyphicon-minus text-info"></span><span
-                                class="sr-only">Remove</span></button>
-                        <button type="button" id="add-a-choice" class="btn btn-default" title="Add a choice"><span
-                                class="glyphicon glyphicon-plus text-success"></span><span
-                                class="sr-only">Add</span></button>
+                        <button type="button" id="remove-a-choice" class="btn btn-default" title="Remove a choice">
+                            <svg class="bi flex-shrink-0 me-2 text-center text-info" width="36" height="36" role="img" aria-label="Info:">
+                                <use xlink:href="#bi_bi-dash-lg"/>
+                            </svg><span class="sr-only"></span>
+                        </button>
+                        <button type="button" id="add-a-choice" class="btn btn-default add-a-choice" title="Add a choice">
+                            <svg class="bi flex-shrink-0 me-2 text-center text-success" width="36" height="36" role="img" aria-label="Success:">
+                                <use xlink:href="#bi_bi-plus-lg"/>
+                            </svg><span class="sr-only"></span>
+                        </button>
                     </div>
                 </div>
 
                 <div class="col-md-8">
-                    <button name="fin_sondage_autre" value="Next" type="submit" class="btn btn-success float-end"
+                    <button id="goTo_step_3" name="goTo_step_3" value="Next" type="submit" class="btn btn-success float-end"
                         title="Go to step 3">Next</button>
-                    <a class="btn btn-default float-end" href="./addAppointment.html" title="Return to step 1">Back</a>
+                    <a class="btn btn-default float-end" id="backTo1" title="Return to step 1">Back</a>
                 </div>
             </div>
 
         </form>
-
-        <noscript>
-            <div class="alert alert-danger">
-                [missing key: Step 1.Javascript is disabled on your browser. Its activation is required to create a
-                poll.]
-            </div>
-        </noscript>
-        <div id="cookie-warning" class="alert alert-danger" style="display:none">
-            [missing key: Step 1.Cookies are disabled on your browser. Theirs activation is required to create a
-            poll.]
-        </div>
-
-
     </main>
 </div> <!-- .container -->

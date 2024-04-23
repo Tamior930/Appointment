@@ -9,7 +9,7 @@ class SimpleLogic
         $this->dh = new DataHandler();
     }
 
-    function handleRequest($method, $param)
+    function handleRequest($method, $param, $title, $location, $date, $voting_deadline, $appointment_id, $date_time)
     {
         switch ($method) {
             case "infoAppointment":
@@ -18,11 +18,11 @@ class SimpleLogic
             case "queryAppointments":
                 $res = $this->dh->queryAppointments();
                 break;        
-            case "queryPersonById":
-                $res = $this->dh->queryPersonById($param);
+            case "saveAppointmentToDb":
+                $res = $this->dh->saveAppointmentToDb($title, $location, $date, $voting_deadline);
                 break;
-            case "queryPersonByName":
-                $res = $this->dh->queryPersonByName($param);
+            case "saveDateOptionToDb":
+                $res = $this->dh->saveDateOptionToDb($appointment_id, $date_time);
                 break;
             case "getDemoData":
                 $res = $this->dh->loadDemoData();

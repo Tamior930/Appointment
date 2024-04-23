@@ -7,10 +7,14 @@ class DB {
     var $driver;
 
     function __construct(){
-        $this -> conn = $this -> getDbConnection();
+        $this -> setDbConnection();
     }
 
     function getDbConnection() {
+        return $this -> conn;
+    }
+
+    function setDbConnection() {
 		$host = 'localhost';
         $user = 'bif2webscriptinguser';
         $pass = 'bif2021';
@@ -26,8 +30,6 @@ class DB {
             throw new Exception("Verbindung fehlgeschlagen: " . $this->conn->connect_error);
         }
         $this->conn->set_charset("utf8mb4");
-
-        return $this -> conn;
     }
 
 	// Singleton-Zugriffsmethode

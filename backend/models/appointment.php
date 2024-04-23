@@ -37,7 +37,10 @@ class Appointment {
         }
         $this->stmt->bind_param("ssss", $this->title, $this->location, $this->date, $this->voting_deadline);
 
-        return $this->db->insertRecord($this->stmt);
+        $this->db->insertRecord($this->stmt);
+
+        return array('inserted_id' => $this->db->inserted_id);
+        
         
     }
 

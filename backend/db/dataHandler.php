@@ -1,9 +1,22 @@
 <?php
-include("models/appointment.php");
+require_once("models/appointment.php");
+require_once("models/date_options.php");
 
 
 class DataHandler
 {
+    public function saveDateOptionToDb($appointment_id, $date_time)
+    {
+        $d = new DateOptions($appointment_id, $date_time);
+        return $d -> save_date_options_to_db();
+    }
+    
+    public function saveAppointmentToDb($title, $location, $date, $voting_deadline)
+    {
+        $a = new Appointment($title, $location, $date, $voting_deadline);
+        return $a -> save_appointment_to_db();
+    }
+    
     public function infoAppointment($id)
     {
         return get_appointmentByID($id);
