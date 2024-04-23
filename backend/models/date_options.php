@@ -61,3 +61,27 @@ function getDateOptions($id)
     return $dateOptions;
 }
 
+function getDateOptionsByAppointmentID($id) {
+    $db = new DB();
+    $db->getDbConnection();
+
+
+
+    if ($db != null) {
+        //mysqli_report (MYSQLI_REPORT_OFF);
+        $db->driver->report_mode = MYSQLI_REPORT_ERROR;
+        //$query = "SELECT * FROM appointments FORCE INDEX (PRIMARY) ORDER BY ID";
+        $query = "SELECT * FROM date_options WHERE appointment_id = ?;";
+
+        $stmt = $db->prepare($query);
+        $stmt->bind_param("i", $id);
+
+        $r = $db->getMultipleRecords($stmt);
+        //$r = "";
+        //$r->bind_result($uid, $uname, $upass, $umail);
+        $db->driver->report_mode = MYSQLI_REPORT_ALL;
+        $db->closedb();
+        return $r;
+    }
+}
+

@@ -12,9 +12,12 @@ class SimpleLogic
     function handleRequest($method, $param, $title, $location, $date, $voting_deadline, $appointment_id, $date_time)
     {
         switch ($method) {
-            // case "infoAppointment":
-            //     $res = $this->dh->infoAppointment($param);
-            //     break;
+            case "infoAppointment":
+                $res = $this->dh->infoAppointment($param);
+                break;
+            case "getDateOptionsByAppointmentID":
+                $res = $this->dh->getDateOptionsByAppointmentID($appointment_id);
+                break;
             case "queryDateOptionByID":
                 $res = $this->dh->queryDateOptionByID($param);
                 break;

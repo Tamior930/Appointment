@@ -6,6 +6,12 @@ require_once("models/votes.php");
 
 class DataHandler
 {
+    
+    public function getDateOptionsByAppointmentID($appointment_id)
+    {
+        return getDateOptionsByAppointmentID($appointment_id);
+    }
+
     public function saveDateOptionToDb($appointment_id, $date_time)
     {
         $d = new DateOptions($appointment_id, $date_time);

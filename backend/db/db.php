@@ -94,5 +94,23 @@ class DB {
 			return false;
 		}
 	}
+
+    function getMultipleRecords($stmt)
+	{
+		$objectArray = [];
+		$i = 0;
+
+		$stmt->execute();
+		$result = $stmt->get_result();
+		while ($obj = $result->fetch_object()) {
+			//printf("%s (%s)\n", $obj->Name, $obj->CountryCode);
+			$objectArray[$i] = $obj;
+			$i++;
+		}
+		//$this->connection->close();
+
+
+		return $objectArray;
+	}
 }
 

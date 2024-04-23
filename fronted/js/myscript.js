@@ -451,10 +451,12 @@ function displayAppointments(appointments) {
         if (!appointment) return;
 
         // Datum Optionen anzeigen lassen, wenn man Appointment klickt. Geht über Ajax Call mit Callback (Return dateOptions!!)
-        loadDateOptions(appointmentId, function (dateOptions) {
+        loadDateOptions(appointmentId, async function (dateOptions) {
             const now = new Date();
             const deadline = new Date(appointment.voting_deadline);
             const isVotingOpen = now < deadline; // Prüfen, ob die Abstimmung noch offen ist
+
+            let dateOptionsFromAppointmentID = await getDateOptionsByAppointmentID(appointmentId);
 
             let dateOptionsHtml = "";
             let userInputHtml = "";
@@ -553,6 +555,28 @@ function insertDateOptions(submissionData) {
                 "There was an error submitting your response. Please try again.",
                 "danger", submissionData.appointmentId //Zeigt Error Meldung in Modal Alert
             );
+        },
+    });
+}
+
+
+function getDateOptionsByAppointmentID(appointment_id) {
+    return $.ajax({
+        type: "GET",
+        async: false,
+        url: "../backend/serviceHandler.php",
+        cache: false,
+        data: {
+            method: "getDateOptionsByAppointmentID",
+            appointment_id: appointment_id,
+        },
+        dataType: "json",
+        success: function (dateOptions) {
+            console.log("Date options loaded: ", dateOptions);
+            return dateOptions;
+        },
+        error: function (error) {
+            console.error("Error loading date options: ", error);
         },
     });
 }
