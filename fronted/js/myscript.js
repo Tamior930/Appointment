@@ -455,10 +455,10 @@ function displayAppointments(appointments) {
             const deadline = new Date(appointment.voting_deadline);
             const isVotingOpen = now < deadline; // Prüfen, ob die Abstimmung noch offen ist
 
-            let dateOptionsFromAppointmentID = await getDateOptionsByAppointmentID(appointmentId);
-
             let dateOptionsHtml = "";
             let userInputHtml = "";
+
+            // let dateOptionsFromAppointmentID = await getDateOptionsByAppointmentID(appointmentId);
 
             // Überprüfen, ob das Voting noch verfügbar ist
             if (isVotingOpen) {
@@ -466,7 +466,7 @@ function displayAppointments(appointments) {
                     dateOptions.forEach((dateOption, index) => {
                         dateOptionsHtml += `
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="${index}" id="dateOption${index}">
+                                <input class="form-check-input" type="checkbox" value="${index}" name="dateOption" id="dateOption${index}">
                                 <label class="form-check-label" for="dateOption${index}">
                                     ${dateOption}
                                 </label>
@@ -478,14 +478,13 @@ function displayAppointments(appointments) {
                 userInputHtml = `
                     <input type="text" id="username" placeholder="Your name" class="form-control mb-2">
                     <textarea id="comment" placeholder="Leave a comment" class="form-control my-2"></textarea>
-                    <button class="btn btn-primary" onclick="handleSubmission('${appointment.appointment_id}', '${isVotingOpen}')">Submit</button>
+                    <button class="btn btn-primary" onclick="handleSubmission('${appointment.appointment_id}')">Submit</button>
                     <div class="alertContainer mt-3" id="alertContainer${appointment.appointment_id}"></div>
                 `;
             } else { // Falls Voting zu ist.
                 userInputHtml = "<p>Voting has ended.</p>";
                 dateOptionsHtml = "";
             }
-
 
             // Detail Ansicht
             $("#appointmentModal .modal-body").html(`
@@ -503,43 +502,49 @@ function displayAppointments(appointments) {
 }
 
 function handleSubmission(appointmentId) {
-
     const username = document.getElementById("username").value;
     const comment = document.getElementById("comment").value;
 
     const selectedDateOptions = [];
     const checkboxes = document.querySelectorAll('.form-check-input');
 
+    // User Empty dann Danger Alert ausgeben
     if (username == "") {
         showAlert("Please enter your name.", "danger", appointmentId);
         return;
     }
 
+    // CheckBox Value also Array beginnend von 0 und checked if ja dann 1 ansonsten 0
     checkboxes.forEach(checkbox => {
-        if (checkbox.checked) {
-            selectedDateOptions.push(checkbox.value);
-        }
+        selectedDateOptions.push({
+            value: checkbox.value,
+            checked: checkbox.checked ? "1" : "0" // Speichert Ja oder Nein.
+        });
     });
 
-    if (selectedDateOptions.length === 0) {
+    // Muss mindestens eine Checkbox angekreuzt sein
+    if (selectedDateOptions.every(option => option.checked === "0")) {
         showAlert("Please select at least one date option.", "danger", appointmentId);
         return;
     }
 
-    var submissionData = {
-        appointmentId: appointmentId,
-        option_id: dateOptionIndex, // DAS MUSS DU NOCH NACHSCHAUEN
-        username: username,
-        comment: comment,
-        dateOptions: selectedDateOptions,
-    };
+    // Daten für jedes Checkbox in insertDateOptions aufrufen, unabhängig davon, ob es markiert wurde oder nicht
+    selectedDateOptions.forEach((selectedDateOption) => {
+        var submissionData = {
+            appointmentId: appointmentId,
+            option_id: selectedDateOption.value,
+            username: username,
+            comment: comment,
+            availability: selectedDateOption.checked
+        };
 
-    insertDateOptions(submissionData);
+        insertDateOptions(submissionData);
+    });
 }
 
 function insertDateOptions(submissionData) {
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: "../backend/serviceHandler.php",
         cache: false,
         data: {
@@ -548,21 +553,21 @@ function insertDateOptions(submissionData) {
         },
         dataType: "json",
         success: function () {
-            showAlert("Your response has been submitted successfully!", "success", submissionData.appointmentId); // Zeigt Success Meldung in Modal Alert
+            showAlert("Your response has been submitted successfully!", "success", submissionData.appointmentId);
             // $("#appointmentModal").modal("hide");
-            // loadAppointments(); // Refresh the list of appointments
+            // loadAppointments();
         },
         error: function (error) {
             console.error("Error submitting response: ", error);
             showAlert(
                 "There was an error submitting your response. Please try again.",
-                "danger", submissionData.appointmentId //Zeigt Error Meldung in Modal Alert
+                "danger", submissionData.appointmentId
             );
         },
     });
 }
 
-
+// FUNKTION NICHT IN VERWENDUNG DA EINE BESSERE ALTERNATIVE GEFUNDEN WURDE
 function getDateOptionsByAppointmentID(appointment_id) {
     return $.ajax({
         type: "GET",
@@ -589,9 +594,9 @@ function showAlert(message, type, appointmentId) {
         ${message}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>`;
-    $(`#alertContainer${appointmentId}`).html(alertHtml).fadeIn();
+    $(`#alertContainer${appointmentId}`).html(alertHtml).fadeIn(500).fadeOut(2000);
 
-    setTimeout(function () {
-        $(`#alertContainer${appointmentId}`).fadeOut();
-    }, 3000);
+    // setTimeout(function () {
+    //     $(`#alertContainer${appointmentId}`).fadeOut();
+    // }, 3000);
 }
