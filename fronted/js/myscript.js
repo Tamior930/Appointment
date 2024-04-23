@@ -2,7 +2,7 @@
 $(document).ready(function () {
     const submitChoicesAvalaible = null;
     //For Poll 1
-    let name, email, poll_title, location, description = null;
+    let name, date, poll_title, location, description = null;
     let options = [];
     let options_amount = 5;
     let voting_deadline; 
@@ -31,7 +31,6 @@ $(document).ready(function () {
 
     $('#goTo_step_3').click(function (e) {
         e.preventDefault();
-        
         console.log("ok");
     });
 
@@ -39,7 +38,7 @@ $(document).ready(function () {
     const form=document.getElementById("form_poll_1");
     async function submitForm(event){
         name = checkAndGet(document.getElementById("name"), name);
-        email = checkAndGet(document.getElementById("email"), email);
+        date = checkAndGet(document.getElementById("date"), date);
         poll_title = checkAndGet(document.getElementById("poll_title"), poll_title);
         location = checkAndGet(document.getElementById("location"), location);
         description = checkAndGet(document.getElementById("description"), description);
@@ -92,13 +91,13 @@ $(document).ready(function () {
 
             //newAppointment(title_param, location_param, date_param, voting_deadline_param)
             //newDateOption(appointment_id_param, date_time_param)
-            let appointment_id = await newAppointment(poll_title, location, "2022-09-25", voting_deadline);
+            let appointment_id = await newAppointment(poll_title, location, date, voting_deadline);
             console.log(appointment_id);
             options.forEach(option => {
                 newDateOption(appointment_id.inserted_id, option.replace(' ', 'T'));
             });
-            
             document.getElementById("home").click();
+            
         }
 
         if (event.target.id == 'backTo1'){
@@ -110,7 +109,7 @@ $(document).ready(function () {
                     $('#tab_add').html($(data).find('#tab_add'));
                     $('#form_poll_1').on('submit', submitForm);
                     $('#name').val(name);
-                    $('#email').val(email);
+                    $('#date').val(date);
                     $('#poll_title').val(poll_title);
                     $('#location').val(location);
                     $('#description').val(description);
