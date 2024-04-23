@@ -141,7 +141,7 @@ function saveVoteData($data) {
     $option_id = $data['option_id'];
     $username = $data['username'];
     $comment = $data['comment'];
-    $availability = $data['availability'];
+    $availability = $data['dateOptions'];
 
     $db = new DB();
     $conn = $db->getDbConnection();

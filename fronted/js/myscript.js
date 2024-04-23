@@ -114,7 +114,7 @@ function displayAppointments(appointments) {
     const container = $("#appointmentsList");
     container.empty();
 
-    appointments.forEach((appointment, index) => {
+    appointments.forEach((appointment) => {
         const card = `
            <div class="card mb-3" data-id="${appointment.appointment_id}">
                <div class="card-header">Appointment ID: ${appointment.appointment_id}</div>
@@ -150,26 +150,30 @@ function displayAppointments(appointments) {
             if (isVotingOpen) {
                 if (dateOptions) {
                     dateOptions.forEach((dateOption, index) => {
-                        dateOptionsHtml += `<div class="form-check">
-                             <input class="form-check-input" type="checkbox" value="${dateOption}" id="dateOption${index}">
-                             <label class="form-check-label" for="dateOption${index}">
-                                 ${dateOption}
-                             </label>
-                         </div>`;
+                        dateOptionsHtml += `
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="${index}" id="dateOption${index}">
+                                <label class="form-check-label" for="dateOption${index}">
+                                    ${dateOption}
+                                </label>
+                            </div>
+                        `;
                     });
                 }
-                // Falls Voting verfügbar dann Input und Kommentar
+                // Name, Kommentar HTML
                 userInputHtml = `
                     <input type="text" id="username" placeholder="Your name" class="form-control mb-2">
                     <textarea id="comment" placeholder="Leave a comment" class="form-control my-2"></textarea>
-                    <button class="btn btn-primary" onclick="handleSubmission('${appointment.appointment_id}', this.getAttribute('data-option-index'), '${isVotingOpen}')">Submit</button>
+                    <button class="btn btn-primary" onclick="handleSubmission('${appointment.appointment_id}', '${isVotingOpen}')">Submit</button>
                     <div class="alertContainer mt-3" id="alertContainer${appointment.appointment_id}"></div>
-                    `;
-            } else {
-                userInputHtml = "<p>Voting has ended.</p>"; // Meldung anzeigen, wenn das Voting beendet ist
-                dateOptionsHtml = ""; // Keine Datumsoptionen anzeigen, wenn das Voting beendet ist
+                `;
+            } else { // Falls Voting zu ist.
+                userInputHtml = "<p>Voting has ended.</p>";
+                dateOptionsHtml = "";
             }
 
+
+            // Detail Ansicht
             $("#appointmentModal .modal-body").html(`
              <p>Location: ${appointment.location}</p>
              <p>Date: ${appointment.date}</p>
@@ -184,36 +188,36 @@ function displayAppointments(appointments) {
     });
 }
 
-function handleSubmission(appointmentId, optionIndex, isVotingOpen) {
-    if (!isVotingOpen) {
-        alert("Voting has already ended for this appointment.");
-        return;
-    }
+function handleSubmission(appointmentId) {
 
-    var username = $("#username").val().trim();
-    var comment = $("#comment").val().trim();
+    const username = document.getElementById("username").value;
+    const comment = document.getElementById("comment").value;
+
+    const selectedDateOptions = [];
+    const checkboxes = document.querySelectorAll('.form-check-input');
+
     if (username == "") {
-        alert("Please enter your name.");
+        showAlert("Please enter your name.", "danger", appointmentId);
         return;
     }
 
-    // Gather all selected date options
-    var selectedDates = [];
-    $("#appointmentModal .form-check-input:checked").each(function () {
-        selectedDates.push($(this).val());
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            selectedDateOptions.push(checkbox.value);
+        }
     });
 
-    if (selectedDates.length === 0) {
-        alert("Please select at least one date option.");
+    if (selectedDateOptions.length === 0) {
+        showAlert("Please select at least one date option.", "danger", appointmentId);
         return;
     }
 
     var submissionData = {
         appointmentId: appointmentId,
-        option_id: optionIndex, // DAS MUSS DU NOCH NACHSCHAUEN
+        option_id: dateOptionIndex, // DAS MUSS DU NOCH NACHSCHAUEN
         username: username,
         comment: comment,
-        dateOptions: selectedDates,
+        dateOptions: selectedDateOptions,
     };
 
     insertDateOptions(submissionData);
@@ -230,7 +234,7 @@ function insertDateOptions(submissionData) {
         },
         dataType: "json",
         success: function () {
-            showAlert("Your response has been submitted successfully!", "success", submissionData.appointmentId); //Zeigt Success Meldung in Modal Alert
+            showAlert("Your response has been submitted successfully!", "success", submissionData.appointmentId); // Zeigt Success Meldung in Modal Alert
             // $("#appointmentModal").modal("hide");
             // loadAppointments(); // Refresh the list of appointments
         },
@@ -251,7 +255,7 @@ function showAlert(message, type, appointmentId) {
     </div>`;
     $(`#alertContainer${appointmentId}`).html(alertHtml).fadeIn();
 
-    setTimeout(function() {
+    setTimeout(function () {
         $(`#alertContainer${appointmentId}`).fadeOut();
-    }, 5000);
+    }, 3000);
 }
