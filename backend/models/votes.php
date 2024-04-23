@@ -24,16 +24,14 @@ function saveVoteData($data) {
     $option_id = $data['option_id'];
     $username = $data['username'];
     $comment = $data['comment'];
-    $availability = $data['dateOptions'];
+    $availability = $data['availability'];
 
     $db = new DB();
     $conn = $db->getDbConnection();
 
     $stmt = $conn->prepare("INSERT INTO votes (appointment_id, option_id, username, availability, comment) VALUES (?, ?, ?, ?, ?)");
 
-    $availabilityInt = $availability ? 1 : 0;
-
-    $stmt->bind_param("iisis", $appointmentId, $option_id, $username, $availabilityInt, $comment);
+    $stmt->bind_param("iisis", $appointmentId, $option_id, $username, $availability, $comment);
     $stmt->execute();
 
     // Schließen Sie die Anweisung und Verbindung
