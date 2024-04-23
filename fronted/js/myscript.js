@@ -1,6 +1,3 @@
-(function () {
-
-});
 //Starting point for JQuery init
 $(document).ready(function () {
     const submitChoicesAvalaible = null;
@@ -10,16 +7,16 @@ $(document).ready(function () {
     let options_amount = 5;
     let voting_deadline; 
     /*
-    $("#searchResult").hide();
-    $("#btn_Search").click(function (e) {
-       loaddata($("#seachfield").val());
-    });
-    */
-   //loaddata('');
-   //$('.active a').tab('show');
-   loadAppointments()
+            $("#searchResult").hide();
+            $("#btn_Search").click(function (e) {
+               loaddata($("#seachfield").val());
+            });
+            */
+    //loaddata('');
+    //$('.active a').tab('show');
+    loadAppointments();
 
-   $('#navTabs a').click(function (e) {
+    $("#navTabs a").click(function (e) {
         e.preventDefault();
         
         let href = this.hash;
@@ -38,7 +35,6 @@ $(document).ready(function () {
         console.log("ok");
     });
 
-    
     //Get form element
     const form=document.getElementById("form_poll_1");
     async function submitForm(event){
@@ -48,7 +44,6 @@ $(document).ready(function () {
         location = checkAndGet(document.getElementById("location"), location);
         description = checkAndGet(document.getElementById("description"), description);
         //setForm1Data(name);
-
 
         //Preventing page refresh
         event.preventDefault();
@@ -136,12 +131,10 @@ $(document).ready(function () {
                 }
             });
         }
-
     }
-
+    
     //Calling a function during form submission.
-    form.addEventListener('submit', submitForm);
-
+    form.addEventListener("submit", submitForm);
     function back(event){
         if ($(this).attr('id') == 'backTo1'){
             if (name){
@@ -305,12 +298,13 @@ function setPoll3Buttons() {
                 //minTime: `${currentdate.getHours() + ":"  + (currentdate.getMinutes() < 10 ? '0' : '') + currentdate.getMinutes()}`
             });
         }                    
-}).attr('readonly', 'readonly');
+    }).attr('readonly', 'readonly');
 }
+
 function checkChoices() {
     var choice0 = document.getElementById("choice0").value;
     var choice1 = document.getElementById("choice1").value;
-    
+
     if (choice0 == "" || choice1 == "") {
         alert("Choice 0 and Choice 1 must not be empty");
         return false;
@@ -351,51 +345,226 @@ function newDateOption(appointment_id_param, date_time_param) {
     });
 }
 
-function loadAppointments() {
-    let searchterm = '';
-    
-    $.ajax({
+function newAppointment(title_param, location_param, date_param, voting_deadline_param) {
+    return $.ajax({
         type: "GET",
         url: "../backend/serviceHandler.php",
         cache: false,
-        data: {method: "queryAppointments", param: searchterm},
+        data: {method: "saveAppointmentToDb", title: title_param, location:location_param, date:date_param, voting_deadline:voting_deadline_param},
         dataType: "json",
         success: function (response) {
-            console.log("Daten geladen: ", response);
-            displayAppointments(response);
+            console.log("Daten gespeichert!", response);
+            return response;
         },
         error: function (response) {
-            console.error("Fehler beim Laden der Daten: ", response);
+            console.error("Fehler beim Speichern der Daten: ", response);
         }
     });
 }
 
+function newDateOption(appointment_id_param, date_time_param) {
+
+    $.ajax({
+        type: "GET",
+        url: "../backend/serviceHandler.php",
+        cache: false,
+        data: {method: "saveDateOptionToDb", appointment_id: appointment_id_param, date_time:date_time_param},
+
+        dataType: "json",
+        success: function (response) {
+            console.log("Daten gespeichert!", response);
+
+        },
+        error: function (response) {
+            console.error("Fehler beim Speichern der Daten: ", response);
+        }
+
+    });
+}
+
+function loadAppointments() {
+    let searchterm = "";
+    $.ajax({
+        type: "GET",
+        url: "../backend/serviceHandler.php",
+        cache: false,
+        data: {
+            method: "queryAppointments",
+            param: searchterm,
+        },
+        dataType: "json",
+        success: function (appointments) {
+            displayAppointments(appointments);
+        },
+        error: function (error) {
+            console.error("Error loading appointments: ", error);
+        },
+    });
+}
+
+function loadDateOptions(id, callback) {
+    $.ajax({
+        type: "GET",
+        url: "../backend/serviceHandler.php",
+        cache: false,
+        data: {
+            method: "queryDateOptionByID",
+            param: id,
+        },
+        dataType: "json",
+        success: function (dateOptions) {
+            console.log("Date options loaded: ", dateOptions);
+            callback(dateOptions);
+        },
+        error: function (error) {
+            console.error("Error loading date options: ", error);
+        },
+    });
+
+}
 
 function displayAppointments(appointments) {
     const container = $("#appointmentsList");
     container.empty();
 
-    /*
-    {
-    "appointment_id": "90",
-    "title": "Team Meeting",
-    "location": "Office Conference Room",
-    "date": "2022-11-15",
-    "voting_deadline": "2022-11-10 12:00:00"
-    }
-    */
-
-    appointments.forEach(appointment => {
-        const Card = `
-            <div class="card mb-3">
-                <div class="card-header">${appointment.appointment_id}</div>
-                <div class="card-body">
-                    <h5 class="card-title">${appointment.location}</h5>
-                    <p class="card-text">Start: ${appointment.date}</p>
-                    <p class="card-text">End: ${appointment.voting_deadline}</p>
-                </div>
-            </div>
-        `;
-        container.append(Card);
+    appointments.forEach((appointment, index) => {
+        const card = `
+           <div class="card mb-3" data-id="${appointment.appointment_id}">
+               <div class="card-header">Appointment ID: ${appointment.appointment_id}</div>
+               <div class="card-body">
+                   <h5 class="card-title">Location: ${appointment.location}</h5>
+                   <p class="card-text">Start: ${appointment.date}</p>
+                   <p class="card-text">Voting ends: ${appointment.voting_deadline}</p>
+                   </div>
+           </div>
+       `;
+        container.append(card);
     });
+
+    container.on("click", ".card", function () {
+        const appointmentId = $(this).data("id");
+
+        // Je nachdem welches Appointment anklicken wird es in die Variable Appointment gespeichert über die .find() suche
+        const appointment = appointments.find(
+            (a) => a.appointment_id == appointmentId
+        );
+        if (!appointment) return;
+
+        // Datum Optionen anzeigen lassen, wenn man Appointment klickt. Geht über Ajax Call mit Callback (Return dateOptions!!)
+        loadDateOptions(appointmentId, function (dateOptions) {
+            const now = new Date();
+            const deadline = new Date(appointment.voting_deadline);
+            const isVotingOpen = now < deadline; // Prüfen, ob die Abstimmung noch offen ist
+
+            let dateOptionsHtml = "";
+            let userInputHtml = "";
+
+            // Überprüfen, ob das Voting noch verfügbar ist
+            if (isVotingOpen) {
+                if (dateOptions) {
+                    dateOptions.forEach((dateOption, index) => {
+                        dateOptionsHtml += `<div class="form-check">
+                             <input class="form-check-input" type="checkbox" value="${dateOption}" id="dateOption${index}">
+                             <label class="form-check-label" for="dateOption${index}">
+                                 ${dateOption}
+                             </label>
+                         </div>`;
+                    });
+                }
+                // Falls Voting verfügbar dann Input und Kommentar
+                userInputHtml = `
+                    <input type="text" id="username" placeholder="Your name" class="form-control mb-2">
+                    <textarea id="comment" placeholder="Leave a comment" class="form-control my-2"></textarea>
+                    <button class="btn btn-primary" onclick="handleSubmission('${appointment.appointment_id}', this.getAttribute('data-option-index'), '${isVotingOpen}')">Submit</button>
+                    <div class="alertContainer mt-3" id="alertContainer${appointment.appointment_id}"></div>
+                    `;
+            } else {
+                userInputHtml = "<p>Voting has ended.</p>"; // Meldung anzeigen, wenn das Voting beendet ist
+                dateOptionsHtml = ""; // Keine Datumsoptionen anzeigen, wenn das Voting beendet ist
+            }
+
+            $("#appointmentModal .modal-body").html(`
+             <p>Location: ${appointment.location}</p>
+             <p>Date: ${appointment.date}</p>
+             <p>Voting Deadline: ${appointment.voting_deadline}</p>
+             ${dateOptionsHtml}
+             ${userInputHtml}
+         `);
+
+            // Modal anzeigen
+            $("#appointmentModal").modal("show");
+        });
+    });
+}
+
+function handleSubmission(appointmentId, optionIndex, isVotingOpen) {
+    if (!isVotingOpen) {
+        alert("Voting has already ended for this appointment.");
+        return;
+    }
+
+    var username = $("#username").val().trim();
+    var comment = $("#comment").val().trim();
+    if (username == "") {
+        alert("Please enter your name.");
+        return;
+    }
+
+    // Gather all selected date options
+    var selectedDates = [];
+    $("#appointmentModal .form-check-input:checked").each(function () {
+        selectedDates.push($(this).val());
+    });
+
+    if (selectedDates.length === 0) {
+        alert("Please select at least one date option.");
+        return;
+    }
+
+    var submissionData = {
+        appointmentId: appointmentId,
+        option_id: optionIndex, // DAS MUSS DU NOCH NACHSCHAUEN
+        username: username,
+        comment: comment,
+        dateOptions: selectedDates,
+    };
+
+    insertDateOptions(submissionData);
+}
+
+function insertDateOptions(submissionData) {
+    $.ajax({
+        type: "POST",
+        url: "../backend/serviceHandler.php",
+        cache: false,
+        data: {
+            method: "insertDateOptions",
+            param: submissionData,
+        },
+        dataType: "json",
+        success: function () {
+            showAlert("Your response has been submitted successfully!", "success", submissionData.appointmentId); //Zeigt Success Meldung in Modal Alert
+            // $("#appointmentModal").modal("hide");
+            // loadAppointments(); // Refresh the list of appointments
+        },
+        error: function (error) {
+            console.error("Error submitting response: ", error);
+            showAlert(
+                "There was an error submitting your response. Please try again.",
+                "danger", submissionData.appointmentId //Zeigt Error Meldung in Modal Alert
+            );
+        },
+    });
+}
+
+function showAlert(message, type, appointmentId) {
+    var alertHtml = `<div class="alert alert-${type} alert-dismissible fade show" role="alert">
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>`;
+    $(`#alertContainer${appointmentId}`).html(alertHtml).fadeIn();
+
+    setTimeout(function() {
+        $(`#alertContainer${appointmentId}`).fadeOut();
+    }, 5000);
 }
