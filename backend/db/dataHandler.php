@@ -19,6 +19,11 @@ class DataHandler
         return get_appointments();
     }
 
+    public function insertDateOptions($param)
+    {
+        saveVoteData($param);
+    }
+
     // public function queryPersonById($id)
     // {
     //     $result = array();

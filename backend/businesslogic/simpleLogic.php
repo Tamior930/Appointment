@@ -21,6 +21,9 @@ class SimpleLogic
             case "queryAppointments":
                 $res = $this->dh->queryAppointments();
                 break;
+            case "insertDateOptions":
+                $this->dh->insertDateOptions($param);
+                break;
             // case "queryPersonById":
             //     $res = $this->dh->queryPersonById($param);
             //     break;
