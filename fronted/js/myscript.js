@@ -15,6 +15,13 @@ $(document).ready(function () {
     //loaddata('');
     //$('.active a').tab('show');
     loadAppointments();
+    //testdeletionTest();
+
+    async function testdeletionTest (){
+        let testdeletionTest = await delete_appointmentByID('28');
+        console.log(testdeletionTest);
+    }
+    
 
     $("#navTabs a").click(function (e) {
         e.preventDefault();
@@ -151,8 +158,8 @@ function checkAndGet(element, val) {
 }
 
 function setDateControls(amount, options) {
-    var nb_choices = amount;
-    var last_choice = $('.choice-field:last');
+    let nb_choices = amount;
+    let last_choice = $('.choice-field:last');
 
     if (nb_choices > 0) {
         $('#choice0').val(options.find(op => op !== ""));
@@ -161,7 +168,7 @@ function setDateControls(amount, options) {
     }
 
     for (let i = 1; i < amount; i++) {
-        var new_choice = last_choice.html();
+        let new_choice = last_choice.html();
         let value = options[nb_choices - i];
         if (!value && options.length > amount){
             break;
@@ -171,13 +178,13 @@ function setDateControls(amount, options) {
 
         
         // label
-        var last_choice_label = last_choice.children('label').text();
-        var choice_text = last_choice_label.substring(0, last_choice_label.indexOf(' '));
+        let last_choice_label = last_choice.children('label').text();
+        let choice_text = last_choice_label.substring(0, last_choice_label.indexOf(' '));
     
         // for and id
-        var re_id_choice = new RegExp('"choice' + (nb_choices - i) + '"', 'g');
+        let re_id_choice = new RegExp('"choice' + (nb_choices - i) + '"', 'g');
     
-        var new_choice_html = new_choice.replace(re_id_choice, '"choice' + (nb_choices - i ) + '"')
+        let new_choice_html = new_choice.replace(re_id_choice, '"choice' + (nb_choices - i ) + '"')
             .replace(last_choice_label, choice_text + ' ' + (nb_choices - i + 1))
             .replace(/value="(.*?)"/g, 'value="'+ value + '"');
     
@@ -251,19 +258,19 @@ function setPoll2Buttons() {
 
     // Button "Add a choice"
     $('#add-a-choice').on('click', function () {
-        var nb_choices = $('.choice-field').length;
-        var last_choice = $('.choice-field:last');
+        let nb_choices = $('.choice-field').length;
+        let last_choice = $('.choice-field:last');
 
-        var new_choice = last_choice.html();
+        let new_choice = last_choice.html();
 
         // label
-        var last_choice_label = last_choice.children('label').text();
-        var choice_text = last_choice_label.substring(0, last_choice_label.indexOf(' '));
+        let last_choice_label = last_choice.children('label').text();
+        let choice_text = last_choice_label.substring(0, last_choice_label.indexOf(' '));
 
         // for and id
-        var re_id_choice = new RegExp('"choice' + (nb_choices - 1) + '"', 'g');
+        let re_id_choice = new RegExp('"choice' + (nb_choices - 1) + '"', 'g');
 
-        var new_choice_html = new_choice.replace(re_id_choice, '"choice' + nb_choices + '"')
+        let new_choice_html = new_choice.replace(re_id_choice, '"choice' + nb_choices + '"')
             .replace(last_choice_label, choice_text + ' ' + (nb_choices + 1))
             .replace(/value="(.*?)"/g, 'value=""');
 
@@ -277,7 +284,7 @@ function setPoll2Buttons() {
 
     $('#remove-a-choice').on('click', function () {
         $('.choice-field:last').remove();
-        var nb_choices = $('.choice-field').length;
+        let nb_choices = $('.choice-field').length;
         $('#choice' + (nb_choices - 1)).focus();
         if (nb_choices == 1) {
             $('#remove-a-choice').addClass('disabled');
@@ -301,8 +308,8 @@ function setPoll3Buttons() {
 }
 
 function checkChoices() {
-    var choice0 = document.getElementById("choice0").value;
-    var choice1 = document.getElementById("choice1").value;
+    let choice0 = document.getElementById("choice0").value;
+    let choice1 = document.getElementById("choice1").value;
 
     if (choice0 == "" || choice1 == "") {
         alert("Choice 0 and Choice 1 must not be empty");
@@ -530,7 +537,7 @@ function handleSubmission(appointmentId) {
 
     // Daten für jedes Checkbox in insertDateOptions aufrufen, unabhängig davon, ob es markiert wurde oder nicht
     selectedDateOptions.forEach((selectedDateOption) => {
-        var submissionData = {
+        let submissionData = {
             appointmentId: appointmentId,
             option_id: selectedDateOption.value,
             username: username,
@@ -589,8 +596,29 @@ function getDateOptionsByAppointmentID(appointment_id) {
     });
 }
 
+function delete_appointmentByID(appointment_id) {
+    return $.ajax({
+        type: "GET",
+        async: false,
+        url: "../backend/serviceHandler.php",
+        cache: false,
+        data: {
+            method: "delete_appointmentByID",
+            appointment_id: appointment_id,
+        },
+        dataType: "json",
+        success: function (dateOptions) {
+            console.log("Date options deleted: ", dateOptions);
+            return dateOptions;
+        },
+        error: function (error) {
+            console.error("Error delete appointment: ", error);
+        },
+    });
+}
+
 function showAlert(message, type, appointmentId) {
-    var alertHtml = `<div class="alert alert-${type} alert-dismissible fade show" role="alert">
+    let alertHtml = `<div class="alert alert-${type} alert-dismissible fade show" role="alert">
         ${message}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>`;

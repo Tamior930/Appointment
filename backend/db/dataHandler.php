@@ -23,6 +23,11 @@ class DataHandler
         $a = new Appointment($title, $location, $date, $voting_deadline);
         return $a -> save_appointment_to_db();
     }
+
+    public function delete_appointmentByID($appointment_id)
+    {
+        return delete_appointmentByID($appointment_id);
+    }
     
     public function infoAppointment($id)
     {

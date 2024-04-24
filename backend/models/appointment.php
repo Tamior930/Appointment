@@ -52,6 +52,25 @@ class Appointment
     }
 }
 
+function delete_appointmentByID($id)
+{
+    $db = new DB();
+    $db->getDbConnection();
+
+    $query = "DELETE FROM appointments WHERE appointment_id=?";
+
+    $stmt = $db->prepare($query);
+    $stmt->bind_param("s", $id);
+    
+	$result = $stmt->execute();
+    $db->closedb();
+    
+    if ($result)
+        return $result;
+    else
+        return false;
+}
+
 function get_appointmentByID($id)
 {
     $db = new DB();

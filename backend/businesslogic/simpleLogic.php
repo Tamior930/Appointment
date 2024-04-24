@@ -33,11 +33,14 @@ class SimpleLogic
             case "insertDateOptions":
                 $this->dh->insertDateOptions($param);
                 break;
+            case "insertDateOptions":
+                $this->dh->insertDateOptions($param);
+                break;    
             case "getDemoData":
                  $res = $this->dh->loadDemoData();
                  break;
-             case "saveDemoDataToDB":
-                 $res = $this->dh->saveDemoDataToDB();
+             case "delete_appointmentByID":
+                 $res = $this->dh->delete_appointmentByID($appointment_id);
                  break;
             default:
                 $res = null;
